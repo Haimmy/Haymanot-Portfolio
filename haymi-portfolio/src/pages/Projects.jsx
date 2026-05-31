@@ -1,28 +1,43 @@
-
-import { useState, Suspense, useRef } from "react";
+// Projects.jsx - Fixed GLB model paths and loading
+import { useState, Suspense, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Environment, Html } from "@react-three/drei";
+import { OrbitControls, useGLTF, Environment, Html, Center } from "@react-three/drei";
 import Footer from "../components/Footer";
 
-// 3D Model Viewer Component
+// 3D Model Viewer Component with error handling
 function ModelViewer({ modelPath, title }) {
-  const { scene } = useGLTF(modelPath);
+  const { scene, error } = useGLTF(modelPath);
   const modelRef = useRef();
 
   useFrame((state) => {
-    if (modelRef.current) {
+    if (modelRef.current && !error) {
       modelRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
     }
   });
 
+  if (error) {
+    return (
+      <Html center>
+        <div className="flex flex-col items-center gap-2">
+          <i className="fas fa-exclamation-triangle text-2xl text-[#E67E4E]"></i>
+          <p className="text-[#E67E4E] text-xs text-center">Failed to load model</p>
+        </div>
+      </Html>
+    );
+  }
+
+  if (!scene) return null;
+
   return (
-    <primitive 
-      ref={modelRef} 
-      object={scene} 
-      scale={1.2}
-      position={[0, -0.5, 0]}
-    />
+    <Center>
+      <primitive 
+        ref={modelRef} 
+        object={scene} 
+        scale={1.5}
+        position={[0, -0.5, 0]}
+      />
+    </Center>
   );
 }
 
@@ -63,6 +78,7 @@ function ThreeDProjectCard({ project, index }) {
           <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
           <directionalLight position={[-3, 2, 4]} intensity={0.5} color="#E67E4E" />
           <pointLight position={[2, 1, 3]} intensity={0.6} color="#FF9B5E" />
+          <pointLight position={[-2, 1, -2]} intensity={0.4} color="#4466cc" />
           <Environment preset="city" background={false} />
           
           <Suspense fallback={<ModelLoadingFallback />}>
@@ -76,7 +92,7 @@ function ThreeDProjectCard({ project, index }) {
             autoRotateSpeed={1.5}
             zoomSpeed={0.5}
             minDistance={2}
-            maxDistance={6}
+            maxDistance={8}
             target={[0, 0, 0]}
           />
         </Canvas>
@@ -267,42 +283,43 @@ function WebProjectCard({ project, index }) {
 export default function Projects() {
   const [activeTab, setActiveTab] = useState("all");
 
-  // 3D Projects with GLB model paths
+  // 3D Projects with CORRECT GLB model paths
+  // Place your GLB files in: /public/models/
   const threeDProjects = [
     {
       id: 1,
-      title: "Cyberpunk Character",
+      title: "3D Laptop Model",
       category: "3D",
-      description: "Realistic cyberpunk character with detailed armor and lighting effects. Fully textured and rigged.",
+      description: "Professional laptop model with realistic materials, textures, and interactive 3D viewing.",
       tech: ["Blender", "Substance Painter", "Cycles"],
-      modelPath: "/models/cyberpunk.glb",
+      modelPath: "/models/MyLaptop.glb", 
       year: "2024"
     },
     {
       id: 2,
-      title: "Fantasy Environment",
+      title: "Mouse",
       category: "3D",
-      description: "Magical forest environment with dynamic lighting and particle effects. Low-poly optimized.",
-      tech: ["Blender", "Unreal Engine", "Photoshop"],
-      modelPath: "/models/fantasy.glb",
+      description: "Realistic computer mouse model with high-quality materials and lighting.",
+      tech: ["Blender", "Photoshop"],
+      modelPath: "/models/Mouse.glb",
       year: "2024"
     },
     {
       id: 3,
-      title: "Sci-fi Weapon",
+      title: "Phone Model",
       category: "3D",
-      description: "High-poly sci-fi weapon design with texture painting and PBR materials.",
+      description: "Modern smartphone model with detailed textures and PBR materials.",
       tech: ["Blender", "ZBrush", "Marmoset"],
-      modelPath: "/models/weapon.glb",
+      modelPath: "/models/Phone.glb",
       year: "2023"
     },
     {
       id: 4,
-      title: "Abstract Sculpture",
+      title: "Laptop",
       category: "3D",
-      description: "Modern abstract sculpture with procedural textures and dynamic lighting setup.",
+      description: "Professional laptop model with realistic materials and animations.",
       tech: ["Blender", "Geometry Nodes"],
-      modelPath: "/models/sculpture.glb",
+      modelPath: "/models/MyLaptop.glb",
       year: "2024"
     }
   ];

@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="bg-black min-h-screen">
       <Hero />
-
+       
       {/* What I Do Section - Beautiful Interactive Boxes */}
       <section className="py-32 px-10">
         <div className="text-center mb-16">

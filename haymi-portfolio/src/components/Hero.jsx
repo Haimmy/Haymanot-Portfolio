@@ -1,4 +1,4 @@
-
+// Hero.jsx - Updated with your LapTop.glb model
 import { useState, useEffect, useRef } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, Environment, Html, useGLTF, Sparkles } from "@react-three/drei";
@@ -6,13 +6,13 @@ import * as THREE from "three";
 
 // Custom component to load and animate the laptop model
 function LaptopModel({ onLoad }) {
-  const { scene, animations } = useGLTF("/models/LapTop.glb");
+  const { scene, animations } = useGLTF("/models/MyLaptop.glb");
   const modelRef = useRef();
   
   useEffect(() => {
     if (scene) {
       // Adjust model scale and position
-      scene.scale.set(0.7, 0.7, 0.7);
+      scene.scale.set(0.5, 0.5, 0.5);
       scene.position.set(0, -0.2, 0);
       
       // Enable shadows

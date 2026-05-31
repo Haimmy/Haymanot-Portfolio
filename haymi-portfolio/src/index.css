@@ -1,22 +1,25 @@
+/* index.css - This works with v3 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body{
-  background: #050816;
-  color: white;
+body {
+  background: #0B0B17;
+  color: #F5F5F5;
   overflow-x: hidden;
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
-.gradient-text{
-  background: linear-gradient(to right,#915EFF,#00FFFF);
+.gradient-text {
+  background: linear-gradient(to right, #E67E4E, #FF9B5E);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.glass{
-  background: rgba(255,255,255,0.05);
+.glass {
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(230, 126, 78, 0.15);
+  border-radius: 24px;
 }
