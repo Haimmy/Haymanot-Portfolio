@@ -1,9 +1,9 @@
-
-import { useEffect, useRef } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView, useAnimation, AnimatePresence } from "framer-motion";
 import Footer from "../components/Footer";
 
 export default function About() {
+  const [showJourneyDetails, setShowJourneyDetails] = useState(false);
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.2 });
@@ -26,6 +26,76 @@ export default function About() {
       transition: { staggerChildren: 0.2, delayChildren: 0.1 }
     }
   };
+
+  // Journey details data
+  const journeyDetails = [
+    {
+      year: "2021",
+      title: "Started Learning Web Development",
+      description: "Began my journey into the world of coding with HTML, CSS, and JavaScript. Built my first website and fell in love with creating digital experiences.",
+      icon: "fas fa-code",
+      color: "#E67E4E"
+    },
+    {
+      year: "2022",
+      title: "Discovered 3D Art",
+      description: "Found Blender and started creating 3D models. Learned modeling, texturing, lighting, and rendering. Created my first 3D character.",
+      icon: "fas fa-cube",
+      color: "#FF9B5E"
+    },
+    {
+      year: "2023",
+      title: "Mastered React & Three.js",
+      description: "Deepened my knowledge of React and learned Three.js to combine 3D art with web development. Built interactive 3D websites.",
+      icon: "fab fa-react",
+      color: "#E67E4E"
+    },
+    {
+      year: "2023",
+      title: "Started Video Editing",
+      description: "Learned Premiere Pro and After Effects. Started creating cinematic edits and YouTube content. Grew a small community.",
+      icon: "fas fa-video",
+      color: "#FF9B5E"
+    },
+    {
+      year: "2024",
+      title: "Launched Freelance Career",
+      description: "Started taking freelance projects in web development and 3D art. Worked with clients worldwide.",
+      icon: "fas fa-briefcase",
+      color: "#E67E4E"
+    },
+    {
+      year: "2025",
+      title: "Building My Brand",
+      description: "Creating this portfolio and establishing my presence as a 3D Artist & Interactive Web Developer.",
+      icon: "fas fa-rocket",
+      color: "#FF9B5E"
+    }
+  ];
+
+  // Achievements data
+  const achievements = [
+    {
+      title: "50+ Projects Completed",
+      description: "Successfully delivered projects across web dev, 3D art, and video editing",
+      icon: "fas fa-trophy"
+    },
+    {
+      title: "20+ Happy Clients",
+      description: "Worked with clients from around the world",
+      icon: "fas fa-smile"
+    },
+    {
+      title: "1000+ Hours of Practice",
+      description: "Dedicated to mastering my craft",
+      icon: "fas fa-clock"
+    },
+    {
+      title: "3D Models Created",
+      description: "Over 30 unique 3D models and characters",
+      icon: "fas fa-cubes"
+    }
+  ];
 
   return (
     <div className="bg-black min-h-screen pt-32 pb-0">
@@ -146,41 +216,37 @@ export default function About() {
               </div>
             </motion.div>
 
-            {/* "See More" Button */}
+            {/* "See More" Button - Now expands to show journey */}
             <motion.div variants={fadeInUp} className="pt-6">
-              <button className="group flex items-center gap-3 bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] text-black px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_#FF9B5E]">
-                <span>See More of My Journey</span>
-                <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+              <button
+                onClick={() => setShowJourneyDetails(!showJourneyDetails)}
+                className="group flex items-center gap-3 bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] text-black px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_#FF9B5E]"
+              >
+                <span>{showJourneyDetails ? "Show Less" : "See More of My Journey"}</span>
+                <i className={`fas fa-arrow-${showJourneyDetails ? 'up' : 'right'} group-hover:translate-x-1 transition-transform duration-300`}></i>
               </button>
             </motion.div>
           </motion.div>
 
-          {/* Right Side - Circular Shining Photo Section (Orange overlay removed) */}
+          {/* Right Side - Circular Shining Photo Section */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="space-y-6"
           >
-            {/* Main Photo Card - Circular with shine effect */}
+            {/* Main Photo Card */}
             <div className="relative flex justify-center lg:justify-end">
-              {/* Animated glowing rings - kept for decoration */}
               <div className="absolute inset-0 flex items-center justify-center lg:justify-end">
                 <div className="w-[320px] h-[320px] rounded-full bg-gradient-to-r from-[#E67E4E]/10 to-[#FF9B5E]/10 animate-pulse blur-xl"></div>
               </div>
               
-              {/* Rotating border ring */}
               <div className="absolute w-[300px] h-[300px] rounded-full border-2 border-dashed border-[#E67E4E]/30 animate-[spin_10s_linear_infinite] lg:right-0"></div>
-              
-              {/* Second rotating ring (reverse) */}
               <div className="absolute w-[340px] h-[340px] rounded-full border border-[#FF9B5E]/10 animate-[spin-reverse_15s_linear_infinite] lg:right-0"></div>
               
-              {/* Circular Photo Container - NO ORANGE OVERLAY */}
               <div className="relative w-[280px] h-[280px] rounded-full overflow-hidden ring-4 ring-[#E67E4E]/20 shadow-2xl group">
-                {/* Shine overlay - kept for glossy effect */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out z-10"></div>
                 
-                {/* Your Photo - NO orange gradient overlay anymore */}
                 <img 
                   src="haymi.jpg" 
                   alt="Haymi Girma"
@@ -203,11 +269,9 @@ export default function About() {
                   }}
                 />
                 
-                {/* Shine reflection effect on top - subtle */}
                 <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/5 to-transparent rounded-t-full"></div>
               </div>
               
-              {/* Floating social icons */}
               <div className="absolute -top-2 -right-2 w-10 h-10 bg-[#E67E4E] rounded-full flex items-center justify-center shadow-lg animate-bounce">
                 <i className="fas fa-camera text-black text-sm"></i>
               </div>
@@ -259,7 +323,132 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Journey Timeline Section */}
+        {/* Expandable Journey Details Section */}
+        <AnimatePresence>
+          {showJourneyDetails && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="overflow-hidden mt-12"
+            >
+              {/* Timeline Journey */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                  My Complete{" "}
+                  <span className="bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] bg-clip-text text-transparent">
+                    Journey Timeline
+                  </span>
+                </h2>
+                <div className="relative">
+                  {/* Timeline line */}
+                  <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-[#E67E4E] to-[#FF9B5E]"></div>
+                  
+                  {journeyDetails.map((item, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className={`relative flex flex-col md:flex-row items-start mb-8 ${
+                        index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                      }`}
+                    >
+                      {/* Timeline dot */}
+                      <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-[#E67E4E] ring-4 ring-[#E67E4E]/20 z-10"></div>
+                      
+                      {/* Content */}
+                      <div className={`ml-16 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto'}`}>
+                        <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 hover:border-[#E67E4E]/30 transition-all duration-300">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-10 h-10 bg-[#E67E4E]/10 rounded-full flex items-center justify-center">
+                              <i className={`${item.icon} text-[#E67E4E] text-lg`}></i>
+                            </div>
+                            <span className="text-[#E67E4E] font-bold">{item.year}</span>
+                          </div>
+                          <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                          <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Achievements Section */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                  Key{" "}
+                  <span className="bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] bg-clip-text text-transparent">
+                    Achievements
+                  </span>
+                </h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {achievements.map((achievement, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="bg-gray-900/30 backdrop-blur-sm rounded-2xl p-6 text-center border border-gray-800 hover:border-[#E67E4E]/30 transition-all duration-300 group"
+                    >
+                      <div className="w-16 h-16 mx-auto bg-[#E67E4E]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i className={`${achievement.icon} text-2xl text-[#E67E4E]`}></i>
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-2">{achievement.title}</h3>
+                      <p className="text-gray-400 text-sm">{achievement.description}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Skills & Tools Section */}
+              <div>
+                <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                  Skills &{" "}
+                  <span className="bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] bg-clip-text text-transparent">
+                    Tools
+                  </span>
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { name: "React", icon: "fab fa-react", level: "Expert" },
+                    { name: "Three.js", icon: "fas fa-cube", level: "Advanced" },
+                    { name: "Blender", icon: "fas fa-cube", level: "Expert" },
+                    { name: "Premiere Pro", icon: "fas fa-video", level: "Advanced" },
+                    { name: "Tailwind CSS", icon: "fab fa-css3", level: "Expert" },
+                    { name: "GSAP", icon: "fas fa-bolt", level: "Advanced" },
+                    { name: "After Effects", icon: "fas fa-magic", level: "Intermediate" },
+                    { name: "Node.js", icon: "fab fa-node", level: "Intermediate" }
+                  ].map((skill, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="bg-gray-900/30 backdrop-blur-sm rounded-xl p-4 text-center border border-gray-800 hover:border-[#E67E4E]/30 transition-all duration-300 group"
+                    >
+                      <i className={`${skill.icon} text-3xl text-[#E67E4E] mb-2 block`}></i>
+                      <h4 className="text-white font-medium text-sm">{skill.name}</h4>
+                      <span className="text-gray-500 text-xs">{skill.level}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Call to Action */}
+              <div className="mt-8 text-center">
+                <button className="bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] text-black px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_#FF9B5E]">
+                  <i className="fas fa-download mr-2"></i>
+                  Download Full Resume
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Journey Timeline Section (Original - kept but modified to work with expandable) */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}

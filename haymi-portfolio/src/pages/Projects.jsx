@@ -1,6 +1,7 @@
-// Projects.jsx - Fixed GLB model paths and loading
+// Projects.jsx - Updated with Start Project button navigation
 import { useState, Suspense, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment, Html, Center } from "@react-three/drei";
 import Footer from "../components/Footer";
@@ -281,10 +282,10 @@ function WebProjectCard({ project, index }) {
 }
 
 export default function Projects() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("all");
 
   // 3D Projects with CORRECT GLB model paths
-  // Place your GLB files in: /public/models/
   const threeDProjects = [
     {
       id: 1,
@@ -504,7 +505,7 @@ export default function Projects() {
           )}
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action - Updated with navigation */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -517,7 +518,10 @@ export default function Projects() {
           <p className="text-gray-400 mb-6 max-w-lg mx-auto">
             Let's collaborate and bring your ideas to life with creativity and technical excellence.
           </p>
-          <button className="group bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] text-black px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_#FF9B5E] flex items-center gap-2 mx-auto">
+          <button 
+            onClick={() => navigate('/contact')}
+            className="group bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] text-black px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_#FF9B5E] flex items-center gap-2 mx-auto"
+          >
             Start a Project
             <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
           </button>

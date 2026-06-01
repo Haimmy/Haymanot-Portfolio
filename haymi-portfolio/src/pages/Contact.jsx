@@ -1,4 +1,4 @@
-// Contact.jsx - Beautiful interactive contact page
+import emailjs from '@emailjs/browser';
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
 import Footer from "../components/Footer";
@@ -35,13 +35,30 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    // Your EmailJS credentials
+    const serviceId = 'service_30l4ldk';     
+    const templateId = 'template_hdcrp9b';   
+    const publicKey = '1Ajbay-bGTLQaCUnE';     
+    
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      to_email: 'haymigirma26@gmail.com'  // Your email where you'll receive messages
+    };
+    
+    try {
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1500);
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setIsSubmitting(false);
+      alert('Failed to send message. Please try again later.');
+    }
   };
 
   const fadeInUp = {
@@ -61,44 +78,37 @@ export default function Contact() {
     {
       name: "GitHub",
       icon: "fab fa-github",
-      url: "https://github.com/haymanot",
+      url: "https://github.com/Haimmy",
       color: "hover:bg-gray-700",
-      username: "@haymanot"
+      username: "Haimmy"
     },
     {
       name: "LinkedIn",
       icon: "fab fa-linkedin-in",
-      url: "https://linkedin.com/in/haymanot",
+      url: "https://www.linkedin.com/in/haymanot-girma",
       color: "hover:bg-[#0077b5]",
       username: "haymanot-girma"
     },
     {
-      name: "Twitter",
-      icon: "fab fa-twitter",
-      url: "https://twitter.com/haymanot",
-      color: "hover:bg-[#1DA1F2]",
-      username: "@haymanot"
-    },
-    {
       name: "Instagram",
       icon: "fab fa-instagram",
-      url: "https://instagram.com/haymanot",
+      url: "https://instagram.com/hay_m_ii",
       color: "hover:bg-gradient-to-r from-[#833AB4] via-[#E4405F] to-[#F56040]",
-      username: "@haymanot"
+      username: "hay_m_ii"
     },
     {
       name: "YouTube",
       icon: "fab fa-youtube",
-      url: "https://youtube.com/@haymanot",
+      url: "https://www.youtube.com/@Blend_It_Easy",
       color: "hover:bg-[#FF0000]",
-      username: "Haymanot G."
+      username: "Blend_It_Easy"
     },
     {
       name: "Email",
       icon: "fas fa-envelope",
-      url: "mailto:haymanot.girma@creative.dev",
+      url: "mailto:haymigirma26@gmail.com",
       color: "hover:bg-[#E67E4E]",
-      username: "haymanot.girma@creative.dev"
+      username: "haymigirma26@gmail.com"
     }
   ];
 
@@ -155,8 +165,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">Email</p>
-                  <a href="mailto:haymanot.girma@creative.dev" className="text-white hover:text-[#E67E4E] transition-colors">
-                    haymanot.girma@creative.dev
+                  <a href="mailto:haymigirma26@gmail.com" className="text-white hover:text-[#E67E4E] transition-colors">
+                    haymigirma26@gmail.com
                   </a>
                 </div>
               </div>
@@ -167,8 +177,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">Phone</p>
-                  <a href="tel:+251912345678" className="text-white hover:text-[#E67E4E] transition-colors">
-                    +251 912 345 678
+                  <a href="tel:+251987221138" className="text-white hover:text-[#E67E4E] transition-colors">
+                    +251 987 221 138
                   </a>
                 </div>
               </div>
@@ -274,7 +284,7 @@ export default function Contact() {
                   {/* Email Field */}
                   <div className="relative">
                     <label className="block text-gray-300 text-sm font-medium mb-2">
-                      Email Address
+                      Your Email Address
                     </label>
                     <div className={`relative transition-all duration-300 ${focusedField === 'email' ? 'transform scale-[1.02]' : ''}`}>
                       <i className="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
@@ -371,7 +381,6 @@ export default function Contact() {
         >
           <div className="glass overflow-hidden rounded-2xl">
             <div className="relative h-64 bg-gradient-to-br from-gray-900 to-gray-950 flex items-center justify-center">
-              {/* Map placeholder - You can integrate Google Maps or Leaflet here */}
               <div className="text-center">
                 <i className="fas fa-map-marked-alt text-6xl text-[#E67E4E]/30 mb-4"></i>
                 <p className="text-gray-400">📍 Addis Ababa, Ethiopia</p>

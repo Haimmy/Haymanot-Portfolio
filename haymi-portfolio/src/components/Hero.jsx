@@ -1,12 +1,12 @@
-// Hero.jsx - Updated with your LapTop.glb model
+// Hero.jsx - Updated with working navigation links
 import { useState, useEffect, useRef } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, Environment, Html, useGLTF, Sparkles } from "@react-three/drei";
-import * as THREE from "three";
+import { useNavigate } from "react-router-dom";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls, Environment, useGLTF, Sparkles, Html } from "@react-three/drei";
 
 // Custom component to load and animate the laptop model
 function LaptopModel({ onLoad }) {
-  const { scene, animations } = useGLTF("/models/MyLaptop.glb");
+  const { scene } = useGLTF("/models/MyLaptop.glb");
   const modelRef = useRef();
   
   useEffect(() => {
@@ -56,7 +56,7 @@ function LoadingFallback() {
 }
 
 export default function Hero() {
-  const mountRef = useRef(null);
+  const navigate = useNavigate();
   const [modelLoaded, setModelLoaded] = useState(false);
   const roles = ["3D Artist", "Video Editor", "Web Developer"];
   const [currentRole, setCurrentRole] = useState(0);
@@ -129,13 +129,19 @@ export default function Hero() {
           Let's bring your vision to life with creativity and precision.
         </p>
         
-        {/* Buttons with enhanced effects */}
+        {/* Buttons with enhanced effects - UPDATED with navigation */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <button className="group flex items-center justify-center gap-2 bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] text-black px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_#FF9B5E] shadow-lg">
+          <button 
+            onClick={() => navigate('/projects')}
+            className="group flex items-center justify-center gap-2 bg-gradient-to-r from-[#E67E4E] to-[#FF9B5E] text-black px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_#FF9B5E] shadow-lg"
+          >
             <i className="fas fa-compass"></i> Explore Work
             <i className="fas fa-arrow-right opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300"></i>
           </button>
-          <button className="group flex items-center justify-center gap-2 bg-transparent border-2 border-[#E67E4E] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-[#E67E4E]/20 hover:border-[#FF9B5E] hover:scale-105 hover:shadow-[0_0_20px_#E67E4E]/50">
+          <button 
+            onClick={() => window.open('/Haymi_CV.pdf', '_blank')}
+            className="group flex items-center justify-center gap-2 bg-transparent border-2 border-[#E67E4E] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-[#E67E4E]/20 hover:border-[#FF9B5E] hover:scale-105 hover:shadow-[0_0_20px_#E67E4E]/50"
+          >
             <i className="fas fa-download"></i> Download CV
           </button>
         </div>
@@ -245,9 +251,9 @@ export default function Hero() {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        @keyframes float1 {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(15px, -15px); }
+        @keyframes spin-reverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
         }
       `}</style>
     </section>

@@ -1,6 +1,19 @@
+// Footer.jsx - Updated with correct links and working functionality
+import { Link, useNavigate } from 'react-router-dom';
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  
+  const navigate = useNavigate();
+
+  const handleNewsletterSubscribe = (e) => {
+    e.preventDefault();
+    const email = e.target.querySelector('input[type="email"]').value;
+    if (email) {
+      alert(`Thanks for subscribing! You'll receive updates at ${email}`);
+      e.target.reset();
+    }
+  };
+
   return (
     <footer className="relative bg-gradient-to-b from-black to-gray-950 border-t border-gray-800 mt-20">
       {/* Glow effect at the top of footer */}
@@ -12,27 +25,24 @@ export default function Footer() {
           
           {/* Brand Section */}
           <div className="space-y-4">
-            <div className="text-2xl font-extrabold bg-gradient-to-r from-white to-[#E67E4E] bg-clip-text text-transparent">
+            <Link to="/" className="text-2xl font-extrabold bg-gradient-to-r from-white to-[#E67E4E] bg-clip-text text-transparent hover:to-[#FF9B5E] transition-all duration-300">
               Haymi.Girma
-            </div>
+            </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               Crafting immersive digital experiences through 3D art, video editing, and web development.
               Let's create something extraordinary together.
             </p>
             <div className="flex gap-4 pt-2">
-              <a href="#" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
+              <a href="https://github.com/Haimmy" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
                 <i className="fab fa-github text-xl"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
+              <a href="https://www.linkedin.com/in/haymanot-girma" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
                 <i className="fab fa-linkedin-in text-xl"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
-                <i className="fab fa-twitter text-xl"></i>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
+              <a href="https://instagram.com/hay_m_ii" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
                 <i className="fab fa-instagram text-xl"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
+              <a href="https://www.youtube.com/@Blend_It_Easy" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 hover:translate-y-[-3px]">
                 <i className="fab fa-youtube text-xl"></i>
               </a>
             </div>
@@ -45,14 +55,30 @@ export default function Footer() {
               <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#E67E4E] rounded-full"></span>
             </h3>
             <ul className="space-y-2">
-              {["Home", "About Me", "My Work", "Contact"].map((link) => (
-                <li key={link}>
-                  <a href={`#${link.toLowerCase().replace(" ", "")}`} className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 flex items-center gap-2 group">
-                    <i className="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1"></i>
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">{link}</span>
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link to="/" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 flex items-center gap-2 group">
+                  <i className="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1"></i>
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">Home</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 flex items-center gap-2 group">
+                  <i className="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1"></i>
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">About Me</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/projects" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 flex items-center gap-2 group">
+                  <i className="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1"></i>
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">My Work</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 flex items-center gap-2 group">
+                  <i className="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1"></i>
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">Contact</span>
+                </Link>
+              </li>
             </ul>
           </div>
           
@@ -63,12 +89,12 @@ export default function Footer() {
               <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#E67E4E] rounded-full"></span>
             </h3>
             <ul className="space-y-2">
-              {["3D Modeling", "Frontend Dev", "Video Editing", "UI/UX Design"].map((service) => (
+              {["3D Modeling", "Frontend Dev", "Video Editing"].map((service) => (
                 <li key={service}>
-                  <a href="#" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 flex items-center gap-2 group">
+                  <Link to="/projects" className="text-gray-400 hover:text-[#E67E4E] transition-all duration-300 flex items-center gap-2 group">
                     <i className="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1"></i>
                     <span className="group-hover:translate-x-1 transition-transform duration-300">{service}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -84,24 +110,25 @@ export default function Footer() {
               Get the latest updates on my projects and creative journey.
             </p>
             <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2 bg-gray-900/50 rounded-full border border-gray-700 focus-within:border-[#E67E4E] transition-all duration-300">
+              <form onSubmit={handleNewsletterSubscribe} className="flex items-center gap-2 bg-gray-900/50 rounded-full border border-gray-700 focus-within:border-[#E67E4E] transition-all duration-300">
                 <input 
                   type="email" 
                   placeholder="Your email address" 
                   className="flex-1 bg-transparent px-4 py-2 text-white text-sm outline-none rounded-full"
+                  required
                 />
-                <button className="bg-[#E67E4E] hover:bg-[#FF9B5E] text-black px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 mr-1">
+                <button type="submit" className="bg-[#E67E4E] hover:bg-[#FF9B5E] text-black px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 mr-1">
                   <i className="fas fa-paper-plane"></i>
                 </button>
-              </div>
-              <div className="flex items-center gap-2 text-gray-500 text-xs">
+              </form>
+              <a href="mailto:haymigirma26@gmail.com" className="flex items-center gap-2 text-gray-500 text-xs hover:text-[#E67E4E] transition-colors duration-300">
                 <i className="fas fa-envelope"></i>
                 <span>haymigirma26@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-500 text-xs">
+              </a>
+              <a href="tel:+251987221138" className="flex items-center gap-2 text-gray-500 text-xs hover:text-[#E67E4E] transition-colors duration-300">
                 <i className="fas fa-phone"></i>
                 <span>+251 987 221 138</span>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -116,17 +143,18 @@ export default function Footer() {
             <i className="fas fa-heart text-[#E67E4E] mx-1 animate-pulse"></i> 
             for creative excellence
           </p>
-          <div className="flex gap-6">
-            <a href="#" className="text-gray-500 hover:text-[#E67E4E] transition-colors duration-300 text-xs">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-gray-500 hover:text-[#E67E4E] transition-colors duration-300 text-xs">
-              Terms of Service
-            </a>
-            <a href="#" className="text-gray-500 hover:text-[#E67E4E] transition-colors duration-300 text-xs">
-              Cookie Policy
-            </a>
-          </div>
+          {/* Bottom Bar Links - Already correct */}
+<div className="flex gap-6">
+  <Link to="/privacy-policy" className="text-gray-500 hover:text-[#E67E4E] transition-colors duration-300 text-xs">
+    Privacy Policy
+  </Link>
+  <Link to="/terms-of-service" className="text-gray-500 hover:text-[#E67E4E] transition-colors duration-300 text-xs">
+    Terms of Service
+  </Link>
+  <Link to="/cookie-policy" className="text-gray-500 hover:text-[#E67E4E] transition-colors duration-300 text-xs">
+    Cookie Policy
+  </Link>
+</div>
         </div>
       </div>
       
